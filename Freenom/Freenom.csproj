@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <PackageId>Freenom</PackageId>
-    <Product>Freenom</Product>
+    <PackageId>Freenom.NET</PackageId>
+    <Product>Freenom.NET</Product>
     <Version>1.0.0</Version>
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>

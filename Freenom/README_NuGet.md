@@ -9,9 +9,9 @@ An async C# library for automatically renewing Freenom domains.
 > This library doesn't implement domain registration and configuration GUI API routes, as these can be easily abused for spam.
 
 ## Usage
-Available on NuGet as `Freenom`, methods can be found under the class `FreenomClient`.
+Available on NuGet as `Freenom.NET`, methods can be found under the class `FreenomClient`.
 
-https://www.nuget.org/packages/Freenom
+https://www.nuget.org/packages/Freenom.NET
 
 ## Example
 Under the `Example` folder you can find a demo application that implements the library.
