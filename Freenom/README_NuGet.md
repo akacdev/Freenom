@@ -1,20 +1,16 @@
 # Freenom
 
-<div align="center">
-  <img width="256" height="256" src="https://raw.githubusercontent.com/actually-akac/Freenom/master/Freenom/icon.png">
-</div>
+![](https://raw.githubusercontent.com/actually-akac/Freenom/master/Freenom/icon.png)
 
-<div align="center">
-  An async C# library for automatically renewing Freenom domains.
-</div>
+An async C# library for automatically renewing Freenom domains.
 
-<br>
 
-> **Warning**<br>
+> **Warning**
 > This library doesn't implement domain registration and configuration GUI API routes, as these can be easily abused for spam.
 
 ## Usage
-Available on NuGet as `Freenom`, methods can be found under the class `FreenomClient`.<br/>
+Available on NuGet as `Freenom`, methods can be found under the class `FreenomClient`.
+
 https://www.nuget.org/packages/Freenom
 
 ## Example
