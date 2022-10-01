@@ -17,6 +17,9 @@
 Available on NuGet as `Freenom.NET`, methods can be found under the class `FreenomClient`.<br/>
 https://www.nuget.org/packages/Freenom.NET
 
+## Dependencies
+- `HtmlAgilityPack` ([GitHub](https://github.com/zzzprojects/html-agility-pack)) ([Website](https://html-agility-pack.net/)): For efficiently parsing the DOM and reading data out of it.
+
 ## Example
 Under the `Example` folder you can find a demo application that implements the library.
 
