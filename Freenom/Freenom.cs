@@ -129,7 +129,7 @@ namespace Freenom
         /// <returns>An instance of <see cref="RenewalDomain"/> with your domains.</returns>
         public async Task<RenewalDomain[]> GetRenewals()
         {
-            HttpResponseMessage res = await Client.Request("domains.php?a=renewals", HttpMethod.Get, target: HttpStatusCode.OK);
+            HttpResponseMessage res = await Client.Request(HttpMethod.Get, "domains.php?a=renewals", target: HttpStatusCode.OK);
             string resHtml = await res.Content.ReadAsStringAsync();
 
             return Extract.Renewals(resHtml);
@@ -148,7 +148,7 @@ namespace Freenom
             if (months <= 0) throw new ArgumentOutOfRangeException(nameof(id), "Renewal period has to be a positive value.");
             if (months > 12) throw new ArgumentOutOfRangeException(nameof(id), "Renewal period has to be less or equal to 12 months.");
 
-            HttpResponseMessage csrfRes = await Client.Request($"domains.php?a=renewdomain&domain={id}", HttpMethod.Get, target: HttpStatusCode.OK);
+            HttpResponseMessage csrfRes = await Client.Request(HttpMethod.Get, $"domains.php?a=renewdomain&domain={id}", target: HttpStatusCode.OK);
             string csrfHtml = await csrfRes.Content.ReadAsStringAsync();
             string csrf = Extract.CSRF(csrfHtml);
 
@@ -160,12 +160,12 @@ namespace Freenom
                 new KeyValuePair<string, string>("paymentmethod", "credit"),
             });
 
-            HttpResponseMessage renewRes = await Client.Request("domains.php?submitrenewals=true", HttpMethod.Post, content, HttpStatusCode.Found);
+            HttpResponseMessage renewRes = await Client.Request(HttpMethod.Post, "domains.php?submitrenewals=true", content, HttpStatusCode.Found);
 
             string redirect = renewRes.Headers.Location?.OriginalString;
             if (string.IsNullOrEmpty(redirect)) throw new FreenomException("Exception at renewing: Renewal response is missing a 'Location' header.");
 
-            HttpResponseMessage finalRes = await Client.Request(redirect, HttpMethod.Get, target: HttpStatusCode.OK);
+            HttpResponseMessage finalRes = await Client.Request(HttpMethod.Get, redirect, target: HttpStatusCode.OK);
             string finalHtml = await finalRes.Content.ReadAsStringAsync();
 
             return Extract.OrderNumber(finalHtml);
