@@ -11,17 +11,25 @@
 <br>
 
 > **Warning**<br>
-> This library doesn't implement domain registration and configuration GUI API routes, as these can be easily abused for spam.
+> This library doesn't implement domain registration and configuration web API routes, as these can be easily abused for spam.
 
 ## Usage
-Available on NuGet as `Freenom.NET`, methods can be found under the class `FreenomClient`.<br/>
-https://www.nuget.org/packages/Freenom.NET
+Provides an easy interface for interacting with the Freenom web API routes. This allows you to programmatically renew your domains.
+
+To get started, add the library into your solution with either the `NuGet Package Manager` or the `dotnet` CLI.
+```rust
+dotnet add package Freenom.NET
+```
+
+For the primary classes to become available, import the used namespace.
+```csharp
+using Freenom;
+```
+
+Need more examples? Under the `Example` directory you can find a working demo project that implements this library.
 
 ## Dependencies
 - `HtmlAgilityPack` ([GitHub](https://github.com/zzzprojects/html-agility-pack)) ([Website](https://html-agility-pack.net/)): For efficiently parsing the DOM and reading data out of it.
-
-## Example
-Under the `Example` folder you can find a demo application that implements the library.
 
 ## Code Samples
 
@@ -45,7 +53,7 @@ AccountInfo info = await freenom.GetAccountInfo();
 RenewalDomain[] renewals = await freenom.GetRenewals();
 ```
 
-### Filter for domains that are currently renewable using LINQ
+### Filtering domains that are currently renewable using LINQ
 ```csharp
 RenewalDomain[] renewable = renewals.Where(x => x.Renewable).ToArray();
 ```
@@ -56,11 +64,11 @@ long orderId = await freenom.RenewDomain(6236693445, 12);
 ```
 
 ## Features
-- Made with **.NET 6**
+- Built for **.NET 6** and **.NET 7**
 - Fully **async**
-- Coverage of the **domain renewal** GUI API routes
-- **Automatically renew** Freenom domains that are expiring soon
+- Extensive **XML documentation**
 - **Custom exceptions** (`FreenomException`) for advanced catching
+- **Automatically renew** Freenom domains that are expiring soon
 - Automatic request retries
 - Example project to show the usage of the library
 
@@ -71,5 +79,7 @@ long orderId = await freenom.RenewDomain(6236693445, 12);
 - Task\<RenewalDomain[]> **GetRenewals**()
 - Task\<long> **RenewDomain**(long id, int months)
 
-## Official Links
-https://www.freenom.com/
+## References
+- https://www.freenom.com/
+
+*This is a community-ran library. Not affiliated with OpenTLD BV.*

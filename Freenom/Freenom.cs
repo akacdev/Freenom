@@ -11,10 +11,16 @@ namespace Freenom
     /// </summary>
     public class FreenomClient
     {
+        /// <summary>
+        /// The base URL to connect to.
+        /// </summary>
         public static readonly string BaseUrl = "https://my.freenom.com/";
+        /// <summary>
+        /// The base URI to connect to.
+        /// </summary>
         public static readonly Uri BaseUri = new(BaseUrl);
 
-        private readonly HttpClientHandler HttpHandler = new()
+        private static readonly HttpClientHandler HttpHandler = new()
         {
             AutomaticDecompression = DecompressionMethods.All,
             AllowAutoRedirect = false
@@ -27,7 +33,7 @@ namespace Freenom
         /// </summary>
         /// <param name="userAgent">The User Agent to use while sending HTTP requests.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public FreenomClient(string userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36")
+        public FreenomClient(string userAgent = Constants.UserAgent)
         {
             if (string.IsNullOrEmpty(userAgent)) throw new ArgumentNullException(nameof(userAgent), "User Agent is null or empty.");
 
@@ -67,12 +73,12 @@ namespace Freenom
             if (string.IsNullOrEmpty(email)) throw new ArgumentNullException(nameof(email), "Email address is null or empty.");
             if (string.IsNullOrEmpty(password)) throw new ArgumentNullException(nameof(password), "Password is null or empty.");
 
-            HttpResponseMessage firstRes = await Client.Request("clientarea.php", HttpMethod.Get, target: HttpStatusCode.Redirect);
+            HttpResponseMessage firstRes = await Client.Request(HttpMethod.Get, "clientarea.php", target: HttpStatusCode.Redirect);
 
             string redirect = firstRes.Headers.Location?.OriginalString;
             if (string.IsNullOrEmpty(redirect)) throw new FreenomException("Exception at login: First response is missing a 'Location' header.");
 
-            HttpResponseMessage csrfRes = await Client.Request(redirect, HttpMethod.Get, target: HttpStatusCode.OK);
+            HttpResponseMessage csrfRes = await Client.Request(HttpMethod.Get, redirect, target: HttpStatusCode.OK);
             string csrfHtml = await csrfRes.Content.ReadAsStringAsync();
             string csrf = Extract.CSRF(csrfHtml);
 
@@ -86,10 +92,10 @@ namespace Freenom
                 new KeyValuePair<string, string>("rememberme", "on"),
             });
 
-            HttpResponseMessage loginRes = await Client.Request("dologin.php", HttpMethod.Post, content, HttpStatusCode.Found);
+            HttpResponseMessage loginRes = await Client.Request(HttpMethod.Post, "dologin.php", content, HttpStatusCode.Found);
             if (loginRes.Headers.Location is null) throw new FreenomException("Exception at login: Login response is missing a 'Location' header.");
 
-            HttpResponseMessage clientRes = await Client.Request("clientarea.php", HttpMethod.Get, target: HttpStatusCode.OK);
+            HttpResponseMessage clientRes = await Client.Request(HttpMethod.Get, "clientarea.php", target: HttpStatusCode.OK);
             string clientHtml = await clientRes.Content.ReadAsStringAsync();
 
             return Extract.Name(clientHtml);
@@ -101,7 +107,7 @@ namespace Freenom
         /// <returns></returns>
         public async Task Logout()
         {
-            await Client.Request("logout.php", HttpMethod.Get, target: HttpStatusCode.Found);
+            await Client.Request(HttpMethod.Get, "logout.php", target: HttpStatusCode.Found);
         }
 
         /// <summary>
@@ -110,7 +116,7 @@ namespace Freenom
         /// <returns>An instance of <see cref="AccountInfo"/> with your account details.</returns>
         public async Task<AccountInfo> GetAccountInfo()
         {
-            HttpResponseMessage res = await Client.Request("clientarea.php?action=details", HttpMethod.Get, target: HttpStatusCode.OK);
+            HttpResponseMessage res = await Client.Request(HttpMethod.Get, "clientarea.php?action=details", target: HttpStatusCode.OK);
             string resHtml = await res.Content.ReadAsStringAsync();
 
             return Extract.AccountInfo(resHtml);

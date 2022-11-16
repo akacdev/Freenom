@@ -1,10 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Freenom
@@ -19,8 +15,8 @@ namespace Freenom
         public static async Task<HttpResponseMessage> Request
         (
             this HttpClient cl,
-            string path,
             HttpMethod method,
+            string path,
             HttpContent content = null,
             HttpStatusCode target = HttpStatusCode.OK)
         {

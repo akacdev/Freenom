@@ -1,24 +1,37 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <!--Basic Information-->
+    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
     <PackageId>Freenom.NET</PackageId>
     <Product>Freenom.NET</Product>
-    <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
-    <FileVersion>1.0.1</FileVersion>
     <Authors>akac</Authors>
     <Company>akac</Company>
     <Description>An async C# library for automatically renewing Freenom domains.</Description>
     <PackageTags>freenom; free; dot.tk; dot-tk; domain; registry; registrar; api; automation</PackageTags>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>README_NuGet.md</PackageReadmeFile>
+
+    <!--Version-->
+    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
+    <FileVersion>1.0.2</FileVersion>
+
+    <!--Github-->
     <PackageProjectUrl>https://github.com/actually-akac/Freenom</PackageProjectUrl>
     <RepositoryUrl>https://github.com/actually-akac/Freenom</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageIcon>icon.png</PackageIcon>
-    <NeutralLanguage>en</NeutralLanguage>
-    <PackageReadmeFile>README_NuGet.md</PackageReadmeFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+
+    <!--Compiler Options-->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <!--Miscellaneous-->
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,11 +47,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="icon.png">
+    <None Include="icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Update="README_NuGet.md">
+    <None Include="README_NuGet.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
